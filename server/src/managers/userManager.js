@@ -11,31 +11,41 @@ exports.register = async (userData) => {
     } else {
         throw new Error('User already exists')
     }
-
-    exports.login = async (email, password) => {
-        const user = await User.findOne({email})
-
-        if(!user) {
-            throw new Error('Invalid email or password')
-        }
-        const isValid = await bcrypt.compare(password, user.password)
-       
-        if(!isValid) {
-            throw new Error('Invalid email or password')
-        }
-
-        const payload = {
-            id: user._id,
-            username: user.username,
-          };
-
-          const userData = {
-            id: user._id,
-            username: user.username,
-            isAdmin: user.isAdmin
-          }
-          userData.token = await jwt.sign(payload, SECRET, { expiresIn: '2d' });
-
-          return userData;
-    }
 }
+
+exports.login = async (email, password) => {
+    const user = await User.findOne({email})
+
+    if(!user) {
+        throw new Error('Invalid email or password')
+    }
+    const isValid = await bcrypt.compare(password, user.password)
+   
+    if(!isValid) {
+        throw new Error('Invalid email or password')
+    }
+
+    const payload = {
+        id: user._id,
+        username: user.username,
+      };
+
+      const userData = {
+        id: user._id,
+        username: user.username,
+        isAdmin: user.isAdmin
+      }
+      userData.token = await jwt.sign(payload, SECRET, { expiresIn: '2d' });
+
+      return userData;
+}
+
+exports.getUsers = () => {
+    const result = User.find();
+    return result;
+  }
+  
+  exports.getById = (userId) => User.findById(userId);
+
+  exports.deleteUser =  (userId) => User.findByIdAndDelete(userId)
+  
