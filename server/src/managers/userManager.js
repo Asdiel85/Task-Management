@@ -47,5 +47,10 @@ exports.getUsers = () => {
   
   exports.getById = (userId) => User.findById(userId);
 
+  exports.updateUser = async (userId, data) => {
+    const user = await User.findByIdAndUpdate(userId, data, {runValidators:true, new: true})
+    return await user.save()
+   }
+
   exports.deleteUser =  (userId) => User.findByIdAndDelete(userId)
   
