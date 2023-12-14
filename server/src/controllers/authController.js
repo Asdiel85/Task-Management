@@ -22,5 +22,9 @@ router.post('/login', async (req, res) => {
       res.status(400).json(error.message);
     }
   });
+
+  router.get('/register', (req, res) => {
+    res.status(200).json('Register page')
+  })
   
   module.exports = router;

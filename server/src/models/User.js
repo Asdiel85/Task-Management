@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    uernname: {
+    username: {
       type: String,
       required: [true, "Username is required"],
     },
@@ -45,7 +45,7 @@ userSchema.virtual("repeatPassword").set(function (value) {
 });
 
 userSchema.pre("save", async function () {
-  const hash = bcrypt.hash(this.password, 10);
+  const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
 });
 
