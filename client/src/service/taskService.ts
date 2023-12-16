@@ -3,7 +3,7 @@ import { BASE_URL, TASKS } from "../utils/constants";
 import { handleResponse } from "../utils/handleResponse";
 
 export const getAllTasks = async (userId: string) => {
-  const response = await fetch(`${BASE_URL}${TASKS}/${userId}`, {
+  const response: Response = await fetch(`${BASE_URL}${TASKS}/${userId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: getToken(),
@@ -13,7 +13,7 @@ export const getAllTasks = async (userId: string) => {
 };
 
 export const getSingleTask = async (taskId: string) => {
-  const response = await fetch(`${BASE_URL}${TASKS}/${taskId}`, {
+  const response: Response = await fetch(`${BASE_URL}${TASKS}/${taskId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: getToken(),
