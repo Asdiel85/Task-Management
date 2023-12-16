@@ -1,20 +1,5 @@
 import { createContext, useState } from "react";
-
-type loggedInUser = {
-  id: string;
-  username: string;
-  isAdmin: boolean;
-  token: string;
-};
-
-type AuthProviderProps = {
-  children?: React.ReactNode;
-};
-
-type IAuthContext = {
-  loggedUser: loggedInUser | null;
-  setLoggedUser: (user: loggedInUser | null) => void;
-};
+import { AuthProviderProps, IAuthContext, loggedInUser } from "../utils/types";
 
 const initialValue = {
   loggedUser: null,
