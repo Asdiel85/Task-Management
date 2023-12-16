@@ -26,6 +26,16 @@ router.get("/:userId", routeGuard, async (req, res) => {
   }
 });
 
+router.get("/:taskId", routeGuard, async (req, res) => {
+  const taskId = req.params.taskId;
+  try {
+    const task = await taskManager.getById(taskId);
+    res.status(200).json(task)
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+})
+
 router.put("/:taskId", routeGuard, async (req, res) => {
   const taksId = req.params.taskId;
   const data = req.body;
