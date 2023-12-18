@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext"
 import { Register } from './components/Register/Register';
 import { Login } from './components/Login/Login';
 import { Navigation } from './components/Navigation/Navigation';
+import { Home } from './components/Home/Home';
 
 
 export const App =() => {
@@ -14,6 +15,7 @@ export const App =() => {
       <Navigation />
       <main className={styles.container}>
     <Routes>
+    <Route path="/" element={<Home />} /> 
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
     </Routes>
