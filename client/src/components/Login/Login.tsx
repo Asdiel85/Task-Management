@@ -3,27 +3,27 @@ import styles from './Login.module.css'
 import * as authService from '../../service/authService'
 import { ChangeEvent, FC, useState } from "react";
 import { handleResponse } from "../../utils/handleResponse";
-import { loggedInUser } from "../../utils/types";
+import { loggedInUser, LoginFormValues } from "../../utils/types";
 
 export const Login: FC = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+
+  const [formValues, setFormValues] = useState<LoginFormValues>({
+    email: '',
+    password: ''
+  })
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.name === "email") {
-      setEmail(event.target.value);
-    } else {
-      setPassword(event.target.value);
-    } 
+   setFormValues((state) =>({...state, [event.target.name]: event.target.value}))
   }
 
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault();
-   const response: Response = await authService.login({email, password});
+   const response: Response = await authService.login(formValues);
    const userData: loggedInUser = await handleResponse(response);
-   console.log(userData);
-   
+   localStorage.setItem('token', userData.token);
+   localStorage.setItem('user', JSON.stringify(userData));
   }
+
   return (
     <div className={styles.formHolder}>
     <Form onSubmit={handleSubmit}>
