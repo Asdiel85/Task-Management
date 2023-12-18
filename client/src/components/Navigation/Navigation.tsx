@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-export const Navigation =() => {
+export const Navigation :FC =() => {
   return (
     <Navbar bg="light" data-bs-theme="light">
         <Container>
