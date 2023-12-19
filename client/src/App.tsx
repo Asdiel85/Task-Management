@@ -6,6 +6,7 @@ import { Register } from './components/Register/Register';
 import { Login } from './components/Login/Login';
 import { Navigation } from './components/Navigation/Navigation';
 import { Home } from './components/Home/Home';
+import { TasksTable } from './components/TasksTable/TasksTable';
 
 
 export const App =() => {
@@ -18,6 +19,7 @@ export const App =() => {
     <Route path="/" element={<Home />} /> 
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
+    <Route path ='/tasks' element = {<TasksTable/>} />
     </Routes>
     </main>
     </AuthProvider>
