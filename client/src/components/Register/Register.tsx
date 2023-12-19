@@ -2,9 +2,11 @@ import Form from "react-bootstrap/Form";
 import styles from "./Register.module.css";
 import * as authService from '../../service/authService'
 import { FC, useState, ChangeEvent } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { RegisterFormValues } from "../../utils/types";
 
 export const Register: FC = () => {
+    const navigate: NavigateFunction = useNavigate();
   const [formValues, setFormValues] = useState<RegisterFormValues>({
     firstName: "",
     lastName: "",
@@ -24,6 +26,7 @@ export const Register: FC = () => {
   const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
     event.preventDefault()
      await authService.register(formValues)
+     navigate('/login')
   };
   return (
     <div className={styles.formHolder}>

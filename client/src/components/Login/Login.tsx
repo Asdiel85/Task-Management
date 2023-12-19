@@ -2,10 +2,12 @@ import Form from "react-bootstrap/Form";
 import styles from './Login.module.css'
 import * as authService from '../../service/authService'
 import { ChangeEvent, FC, useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { handleResponse } from "../../utils/handleResponse";
 import { loggedInUser, LoginFormValues } from "../../utils/types";
 
 export const Login: FC = () => {
+  const navigate: NavigateFunction = useNavigate();
 
   const [formValues, setFormValues] = useState<LoginFormValues>({
     email: '',
@@ -22,6 +24,7 @@ export const Login: FC = () => {
    const userData: loggedInUser = await handleResponse(response);
    localStorage.setItem('token', userData.token);
    localStorage.setItem('user', JSON.stringify(userData));
+   navigate('/tasks')
   }
 
   return (
