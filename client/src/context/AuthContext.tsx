@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { AuthProviderProps, IAuthContext, loggedInUser } from "../utils/types";
+import { getLoggedUser } from "../utils/auth";
 
 const initialValue = {
   loggedUser: null,
@@ -12,6 +13,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loggedUser, setLoggedUser] = useState<loggedInUser | null>(
     initialValue.loggedUser
   );
+
+  useEffect(() => {
+    const user: loggedInUser = getLoggedUser();
+    if(user) {
+      setLoggedUser(user)
+    }
+  },[])
 
   return (
     <UserContext.Provider value={{ loggedUser, setLoggedUser }}>
