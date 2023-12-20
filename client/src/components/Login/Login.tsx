@@ -1,13 +1,16 @@
 import Form from "react-bootstrap/Form";
 import styles from './Login.module.css'
 import * as authService from '../../service/authService'
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useContext, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { handleResponse } from "../../utils/handleResponse";
-import { loggedInUser, LoginFormValues } from "../../utils/types";
+import { IAuthContext, loggedInUser, LoginFormValues } from "../../utils/types";
+import { UserContext } from "../../context/AuthContext";
 
 export const Login: FC = () => {
   const navigate: NavigateFunction = useNavigate();
+
+  const { setLoggedUser} = useContext<IAuthContext>(UserContext)
 
   const [formValues, setFormValues] = useState<LoginFormValues>({
     email: '',
@@ -24,6 +27,7 @@ export const Login: FC = () => {
    const userData: loggedInUser = await handleResponse(response);
    localStorage.setItem('token', userData.token);
    localStorage.setItem('user', JSON.stringify(userData));
+   setLoggedUser(userData)
    navigate('/tasks')
   }
 

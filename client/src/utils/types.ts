@@ -27,3 +27,16 @@ export type LoginFormValues = {
   email: string;
   password: string;
 };
+
+export type ToDo = {
+  name: string,
+  taskId: string,
+}
+
+export type Task = {
+  _id: string,
+  name: string,
+  status: 'Not Started' | 'Pending' | 'Finnished',
+  owner: string,
+  todos: ToDo[]
+}
