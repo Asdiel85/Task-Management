@@ -11,7 +11,6 @@ export const TasksTable: FC = () => {
     taskService
       .getAllTasks(loggedUser?.id!)
       .then((data) => {
-        console.log(data);
         setTasks(data)})
   }, []);
   return (
