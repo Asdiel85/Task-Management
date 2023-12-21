@@ -10,16 +10,15 @@ const initialValue = {
 export const UserContext = createContext<IAuthContext>(initialValue);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [loggedUser, setLoggedUser] = useState<loggedInUser | null>(
-    initialValue.loggedUser
-  );
+  const [loggedUser, setLoggedUser] = useState<loggedInUser | null>(null);
 
   useEffect(() => {
     const user: loggedInUser = getLoggedUser();
-    if(user) {
-      setLoggedUser(user)
+    
+    if (user) {
+      setLoggedUser(user);
     }
-  },[])
+  }, []);
 
   return (
     <UserContext.Provider value={{ loggedUser, setLoggedUser }}>
