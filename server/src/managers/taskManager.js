@@ -12,4 +12,6 @@ exports.getById = (taskId) => Task.findById(taskId)
 
 exports.updateTask = (taskId, data) => Task.findByIdAndUpdate(taskId, data, {runValidators: true, new: true})
 
+exports.updateTaskStatus = (taskId, newStatus) => Task.updateOne({_id:taskId}, {$set : {status: newStatus}})
+
 exports.deleteTask = (taskId) => Task.findByIdAndDelete(taskId)
