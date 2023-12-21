@@ -30,11 +30,11 @@ router.get("/:taskId", routeGuard, async (req, res) => {
   const taskId = req.params.taskId;
   try {
     const task = await taskManager.getById(taskId);
-    res.status(200).json(task)
+    res.status(200).json(task);
   } catch (error) {
     res.status(400).json(error.message);
   }
-})
+});
 
 router.put("/:taskId", routeGuard, async (req, res) => {
   const taksId = req.params.taskId;
@@ -48,14 +48,26 @@ router.put("/:taskId", routeGuard, async (req, res) => {
   }
 });
 
+router.patch("/:taskId/status", routeGuard, async (req, res) => {
+  const taskId = req.params.taskId;
+  const {status} = req.body;
+
+  try {
+    const updatedTask = await taskManager.updateTaskStatus(taskId, status);
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+
 router.delete("/:taskId", routeGuard, async (req, res) => {
-    const taksId = req.params.taskId;
-    try {
-       await taskManager.deleteTask(taksId);
-      res.status(200).json('Task deleted');
-    } catch (error) {
-      res.status(400).json(error.message);
-    }
-  });
+  const taksId = req.params.taskId;
+  try {
+    await taskManager.deleteTask(taksId);
+    res.status(200).json("Task deleted");
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
 
 module.exports = router;
