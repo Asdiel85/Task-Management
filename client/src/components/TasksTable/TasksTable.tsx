@@ -24,7 +24,7 @@ export const TasksTable: FC = () => {
   useEffect(() => {
     taskService.updateTaskStatus(taskId, status)
     .then(res => res.json())
-  },[status])
+  },[taskId])
 
   return (
     <Table striped bordered hover>
