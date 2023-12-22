@@ -22,8 +22,10 @@ export const TasksTable: FC = () => {
     setTaskId(taskId)
   }
   useEffect(() => {
-    taskService.updateTaskStatus(taskId, status)
-    .then(res => res.json())
+    if(taskId !== '') {
+      taskService.updateTaskStatus(taskId, status)
+      .then(res => res.json())
+    }
   },[taskId])
 
   return (
