@@ -22,3 +22,15 @@ export const getSingleTask = async (taskId: string) => {
 
   return handleResponse(response);
 };
+
+export const updateTaskStatus = async (taskId: string, status: string) => {
+  const response: Response = await fetch(`${BASE_URL}${TASKS}/${taskId}/status`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: getToken()
+    },
+    body : JSON.stringify({status})
+  })
+  return response
+}
