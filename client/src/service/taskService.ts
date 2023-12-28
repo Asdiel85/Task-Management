@@ -34,3 +34,15 @@ export const updateTaskStatus = async (taskId: string, status: string) => {
   })
   return response
 }
+
+export const editTask = async(taskId: string, data: string) => {
+  const response: Response = await fetch(`${BASE_URL}${TASKS}/${taskId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: getToken()
+    },
+    body: JSON.stringify({data})
+  })
+  return response;
+}
