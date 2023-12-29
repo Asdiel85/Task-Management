@@ -1,5 +1,5 @@
 import { getToken } from "../utils/auth";
-import { BASE_URL, TASKS } from "../utils/constants";
+import { BASE_URL, CREATE, TASKS } from "../utils/constants";
 import { handleResponse } from "../utils/handleResponse";
 
 export const getAllTasks = async (userId: string) => {
@@ -22,6 +22,18 @@ export const getSingleTask = async (taskId: string) => {
 
   return handleResponse(response);
 };
+
+export const createTask = async (name: string) => {
+  const response: Response = await fetch(`${BASE_URL}${TASKS}${CREATE}`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
+    body: JSON.stringify({name})
+  })
+  return response;
+}
 
 export const updateTaskStatus = async (taskId: string, status: string) => {
   const response: Response = await fetch(`${BASE_URL}${TASKS}/${taskId}/status`, {
