@@ -1,4 +1,5 @@
 import Table from "react-bootstrap/Table";
+import Form from "react-bootstrap/Form";
 import {
   ChangeEvent,
   FC,
@@ -25,9 +26,8 @@ export const TasksTable: FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [status, setStatus] = useState<string>("");
   const [taskId, setTaskId] = useState<string>(initialTask._id);
-  const [showEditTaskInput, setShowEditTaskInput] = useState<boolean>(false);
-  const [taskName, setTaskName] = useState<string>(initialTask.name);
-  const [task, setTask] = useState<Task>(initialTask);
+  const [taskName, setTaskName] = useState<string>('')
+  const [taskInput, setTaskInput] = useState<string>('')
 
   useEffect(() => {
     taskService.getAllTasks(loggedUser?.id!).then((data) => {
@@ -43,31 +43,17 @@ export const TasksTable: FC = () => {
     setTaskId(taskId);
   };
 
-  const handleTaskNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTask((prevTask) => {
-      return {
-        ...prevTask,
-        name: e.target.value,
-      };
-    });
-    console.log(taskName);  
-  };
+  const handleTaskNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    setTaskInput(event.target.value) 
+  }
+  const handleSubmitBtnPress = async (event: SyntheticEvent, taskName: string): Promise<void> => {
+    event.preventDefault()
+    setTaskName(taskInput)
+    const newTask = await taskService.createTask(taskName)
+    setTaskName('');
+  }
+ 
 
-  const hadnleEditButtonClick = (task: Task): void => {
-    setShowEditTaskInput(true);
-    setTask(task);
-    setTaskId(task._id)
-  };
-
-  const handleApplyButtonChange = async (
-    event: SyntheticEvent,
-    taskName: string,
-    taskId: string
-  ): Promise<void> => {
-    event.preventDefault();
-    const newTask = await taskService.editTask(taskId, taskName);
-    setShowEditTaskInput(false);
-  };
   useEffect(() => {
     if (taskId !== "") {
       taskService.updateTaskStatus(taskId, status).then((res) => res.json());
@@ -100,34 +86,17 @@ export const TasksTable: FC = () => {
                   <option value="Finnished">Finnished</option>
                 </select>
               </td>
-              <td>
-                <button onClick={() => hadnleEditButtonClick(task)}>
-                  Edit
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      {showEditTaskInput && (
-        <>
-          <label htmlFor="editTask">Task Name</label>
-          <input
-            type="text"
-            name="editTask"
-            id="editTask"
-            onChange={handleTaskNameChange}
-            value={task.name}
-          />
-          <button
-            onClick={(event) =>
-              handleApplyButtonChange(event, task.name, taskId)
-            }
-          >
-            Apply
-          </button>
-        </>
-      )}
+      <Form onSubmit={(event) => handleSubmitBtnPress(event, taskName)}>
+      <Form.Group className="mb-3" controlId="taskInput">
+        <Form.Label>Add task</Form.Label>
+        <Form.Control name="taskInput" type="text" placeholder="Add Task" onChange={handleTaskNameChange} />
+      </Form.Group>
+      <input type="submit" value= 'Submit' />
+    </Form>
     </>
   );
 };
